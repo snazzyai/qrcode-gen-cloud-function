@@ -14,6 +14,7 @@ type Request = {
 //Endpoint '/storeCodes
 const getQrCodes = async (req: Request, res: Response) => {
   const { codes } = req.body
+  let generatedQrCodesArray: Array<string> = []
   //use express-validator to validate req body
   try {
     const entry = db.collection('entries').doc()
@@ -24,13 +25,18 @@ const getQrCodes = async (req: Request, res: Response) => {
 
     entry.set(entryObject)
 
-    const qrCodes = generateQrCode(codes)
+    if(codes) {
+      codes.forEach(async (value) => {
+        const code = await generateQrCode(value);
+        generatedQrCodesArray.push(code);
+      });
 
-    res.status(200).send({
-      status: 'success',
-      message: 'codes added successfully',
-      data: qrCodes,
-    })
+      res.status(200).send({
+        status: 'success',
+        message: 'codes added successfully',
+        data: generatedQrCodesArray,
+      })
+    }
   } catch (error) {
     res.status(500).json(error.message)
     console.log('Error', error)

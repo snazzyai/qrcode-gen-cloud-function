@@ -1,18 +1,9 @@
 import * as qrcode from 'qrcode'
 
-const generateQrCode = (arrayData: Array<string>): Array<string> => {
-  const qrCodeUrlArray: Array<string> = []
-
-  arrayData?.map(async (data: string) => {
-    try {
-      const qrCodeUrl = await qrcode.toDataURL(data)
-      qrCodeUrlArray.push(qrCodeUrl)
-    } catch (error) {
-      return
-    }
-  })
-
-  return qrCodeUrlArray
-}
+const generateQrCode = async (data: string): Promise<string> => {
+  const imageUrl = await qrcode.toDataURL(data);
+  const result = imageUrl
+  return result
+};
 
 export default generateQrCode
