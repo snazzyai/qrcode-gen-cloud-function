@@ -1,7 +1,7 @@
 import * as admin from 'firebase-admin'
 import * as functions from 'firebase-functions'
 
-const projectName = functions.config().projec.id
+const projectName = functions.config().project.id
 
 admin.initializeApp({
   credential: admin.credential.cert({
