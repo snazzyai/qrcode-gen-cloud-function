@@ -1,8 +1,9 @@
 import { Response } from 'express'
 import { db } from '../config/firebase'
+import generateQrCode from '../middlewares/qrCodeGenerator'
 
 type EntryType = {
-  codes: string[]
+  codes: Array<string>
 }
 
 type Request = {
@@ -11,7 +12,7 @@ type Request = {
 }
 
 //Endpoint '/storeCodes
-const generateQrCode = async (req: Request, res: Response) => {
+const getQrCodes = async (req: Request, res: Response) => {
   const { codes } = req.body
   //use express-validator to validate req body
   try {
@@ -23,10 +24,12 @@ const generateQrCode = async (req: Request, res: Response) => {
 
     entry.set(entryObject)
 
+    const qrCodes = generateQrCode(codes)
+
     res.status(200).send({
       status: 'success',
       message: 'codes added successfully',
-      data: entryObject,
+      data: qrCodes,
     })
   } catch (error) {
     res.status(500).json(error.message)
@@ -34,4 +37,4 @@ const generateQrCode = async (req: Request, res: Response) => {
   }
 }
 
-export { generateQrCode }
+export { getQrCodes }
