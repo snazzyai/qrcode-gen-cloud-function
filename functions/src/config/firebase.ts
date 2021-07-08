@@ -6,10 +6,10 @@ const projectName = functions.config().project.id
 admin.initializeApp({
   credential: admin.credential.cert({
     privateKey: functions.config().private.key.replace(/\\n/g, '\n'),
-    projectId: projectName,
+    projectId: functions.config().project.id,
     clientEmail: functions.config().client.email,
   }),
-  databaseURL: `https://${projectName}.firebaseio.com`,
+  databaseURL: `https://${projectName}.firebaseio.com`
 })
 
 const db = admin.firestore()
