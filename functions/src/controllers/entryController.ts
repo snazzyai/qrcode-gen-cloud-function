@@ -1,7 +1,6 @@
 import { Response } from 'express'
 import { db } from '../config/firebase'
-import generateQrCode from '../middlewares/qrCodeGenerator'
-import * as functions from 'firebase-functions'
+import generateQrCode from '../utils/qrCodeGenerator'
 
 type EntryType = {
   codes: Array<string>
