@@ -6,7 +6,7 @@ const projectName = functions.config().project.id
 admin.initializeApp({
   credential: admin.credential.cert({
     privateKey: functions.config().private.key.replace(/\\n/g, '\n'),
-    projectId: functions.config().project.id,
+    projectId: projectName,
     clientEmail: functions.config().client.email,
   }),
   databaseURL: `https://${projectName}.firebaseio.com`
